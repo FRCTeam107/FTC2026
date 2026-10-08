@@ -87,7 +87,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  *  Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Robot: Auto Drive By Gyro (JL)", group="Robot")
+@Autonomous(name="park code (make sure the robot is in the corner)", group="Robot")
 // @Disabled
 public class RobotAutoDriveByGyro_Linear_JL extends LinearOpMode {
 
@@ -201,13 +201,6 @@ public class RobotAutoDriveByGyro_Linear_JL extends LinearOpMode {
         holdHeading( TURN_SPEED, 45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
 
         driveStraight(DRIVE_SPEED, -20.0, 45.0);  // Drive Backwards 20" at -45 degrees
-//        turnToHeading( TURN_SPEED,  -45.0);               // Turn  CCW  to  45 Degrees
-//        holdHeading( TURN_SPEED,  -45.0, 0.5);    // Hold  45 Deg heading for a 1/2 second
-
-//        driveStraight(DRIVE_SPEED, 17.0, 45.0);  // Drive Forward 17" at 45 degrees (-12"x and 12"y)
-//        turnToHeading( TURN_SPEED,   0.0);               // Turn  CW  to 0 Degrees
-//        holdHeading( TURN_SPEED,   0.0, 1.0);    // Hold  0 Deg heading for 1 second
-        //       driveStraight(DRIVE_SPEED,-48.0, 0.0);    // Drive in Reverse 48" (should return to approx. staring position)
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
