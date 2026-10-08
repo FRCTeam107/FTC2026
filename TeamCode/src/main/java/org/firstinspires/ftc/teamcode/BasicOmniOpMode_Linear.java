@@ -32,7 +32,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -64,7 +66,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @TeleOp(name="Basic: Omni Linear OpMode", group="Linear OpMode")
-//@Disabled
+//Disabled
 public class BasicOmniOpMode_Linear extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
@@ -73,7 +75,11 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private DcMotor backLeftDrive = null;
     private DcMotor frontRightDrive = null;
     private DcMotor backRightDrive = null;
-
+    private DcMotor pickupmotor = null;
+    private DcMotor shootingmotor = null;
+    private CRServo indexServo1 = null;
+    private CRServo indexServo2 = null;
+    private CRServo indexServo3 = null;
     @Override
     public void runOpMode() {
 
@@ -83,6 +89,11 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         backLeftDrive = hardwareMap.get(DcMotor.class, "back_left_drive");
         frontRightDrive = hardwareMap.get(DcMotor.class, "front_right_drive");
         backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
+        pickupmotor = hardwareMap.get(DcMotor.class,"pickup_motor");
+        shootingmotor = hardwareMap.get(DcMotor.class,"shooting_motor");
+        indexServo1 = hardwareMap.get(CRServo.class,"indexServo1");
+        indexServo2 = hardwareMap.get(CRServo.class,"indexServo2");
+        indexServo3 = hardwareMap.get(CRServo.class,"indexServo3");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -98,6 +109,8 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        pickupmotor.setDirection(DcMotor.Direction.FORWARD);
+        shootingmotor.setDirection(DcMotor.Direction.FORWARD);
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
@@ -115,6 +128,11 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             double lateral =  gamepad1.left_stick_x;
             double yaw     =  gamepad1.right_stick_x;
 
+            boolean pickupbutton = gamepad1.a;
+            boolean shootingbutton = gamepad1.b;
+            boolean indexServo1button = gamepad1.x;
+            boolean indexservo2button = gamepad1.x;
+            boolean indexservo3button = gamepad1.y;
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
             double frontLeftPower  = axial + lateral + yaw;
@@ -158,6 +176,23 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             backLeftDrive.setPower(backLeftPower);
             backRightDrive.setPower(backRightPower);
 
+            if (pickupbutton) {
+                pickupmotor.setPower(.25);
+            }else{
+                pickupmotor.setPower(0);
+            }
+            if (shootingbutton){
+                shootingmotor.setPower(.50);
+            }else {
+                shootingmotor.setPower(0);
+            }
+            if (indexServo1button){
+             indexServo1.setPower(1);
+             indexServo2.setPower(-1);
+            }
+           if (indexservo3button) {
+               indexServo3.setPower(1);
+           }
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
