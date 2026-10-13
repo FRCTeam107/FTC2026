@@ -32,8 +32,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -65,7 +65,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @TeleOp(name="Basic: Omni Linear OpMode", group="Linear OpMode")
-//@Disabled
+//Disabled
 public class BasicOmniOpMode_Linear extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
@@ -75,8 +75,10 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private DcMotor frontRightDrive = null;
     private DcMotor backRightDrive = null;
     private DcMotor pickupMotor = null;
-
-
+    private DcMotor shooterMotor = null;
+    private CRServo indexServo1 = null;
+    private CRServo indexServo2 = null;
+    private CRServo indexServo3 = null;
     @Override
     public void runOpMode() {
 
@@ -86,7 +88,11 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         backLeftDrive = hardwareMap.get(DcMotor.class, "back_left_drive");
         frontRightDrive = hardwareMap.get(DcMotor.class, "front_right_drive");
         backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
-        pickupMotor = hardwareMap.get(DcMotor.class, "pickup_motor");
+        pickupMotor = hardwareMap.get(DcMotor.class,"pickup_motor");
+        shooterMotor = hardwareMap.get(DcMotor.class,"shooter_motor");
+        indexServo1 = hardwareMap.get(CRServo.class,"index_servo_1");
+        indexServo2 = hardwareMap.get(CRServo.class,"index_servo_2");
+        indexServo3 = hardwareMap.get(CRServo.class,"index_servo_3");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -102,7 +108,8 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        pickupMotor.setDirection(DcMotor.Direction.FORWARD);
+        pickupMotor.setDirection(DcMotor.Direction.REVERSE);
+        shooterMotor.setDirection(DcMotor.Direction.FORWARD);
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
@@ -116,18 +123,21 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             double max;
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-            double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-            double lateral =  gamepad1.left_stick_x;
-            double yaw     =  gamepad1.right_stick_x;
+            double axial = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+            double lateral = gamepad1.left_stick_x;
+            double yaw = gamepad1.right_stick_x;
 
-            boolean pickupButton = gamepad1.a;
-
+            boolean pickupbutton = gamepad1.a;
+            boolean shootingbutton = gamepad1.b;
+            boolean indexServo1button = gamepad1.x;
+            boolean indexServo2button = gamepad1.x;
+            boolean indexServo3button = gamepad1.y;
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
-            double frontLeftPower  = axial + lateral + yaw;
+            double frontLeftPower = axial + lateral + yaw;
             double frontRightPower = axial - lateral - yaw;
-            double backLeftPower   = axial - lateral + yaw;
-            double backRightPower  = axial + lateral - yaw;
+            double backLeftPower = axial - lateral + yaw;
+            double backRightPower = axial + lateral - yaw;
 
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
@@ -136,10 +146,10 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             max = Math.max(max, Math.abs(backRightPower));
 
             if (max > 1.0) {
-                frontLeftPower  /= max;
+                frontLeftPower /= max;
                 frontRightPower /= max;
-                backLeftPower   /= max;
-                backRightPower  /= max;
+                backLeftPower /= max;
+                backRightPower /= max;
             }
 
             // This is test code:
@@ -165,14 +175,35 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             backLeftDrive.setPower(backLeftPower);
             backRightDrive.setPower(backRightPower);
 
-            if(pickupButton) {
+            if (pickupbutton) {
                 pickupMotor.setPower(.25);
-            }else{
+            } else {
                 pickupMotor.setPower(0);
             }
+            if (shootingbutton) {
+                shooterMotor.setPower(.50);
+            } else {
+                shooterMotor.setPower(0);
+            }
+            if (indexServo1button) {
 
+                indexServo2.setPower(-1);
+            } else{
+                indexServo2.setPower(0);
 
+            }
+            if (indexServo2button) {
+                indexServo1.setPower(-1);
 
+            } else{
+                indexServo1.setPower(0);
+
+            }
+            if (indexServo3button) {
+               indexServo3.setPower(1);
+            }else {
+               indexServo3.setPower(0);
+           }
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
