@@ -404,9 +404,9 @@ public class RobotAutoDriveByGyro_Linear_JL extends LinearOpMode {
         driveSpeed = drive;     // save this value as a class member so it can be used by telemetry.
         turnSpeed  = turn;      // save this value as a class member so it can be used by telemetry.
 
-        double axial = 0; //Strafe
+        double axial = 0;
         double lateral = drive;
-        double yaw = turn;
+        double yaw = -turn;
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -428,8 +428,8 @@ public class RobotAutoDriveByGyro_Linear_JL extends LinearOpMode {
 
         frontLeftDrive.setPower(frontLeftPower);
         frontRightDrive.setPower(frontRightPower);
-        backLeftDrive.setPower(frontLeftPower);
-        backRightDrive.setPower(frontRightPower);
+        backLeftDrive.setPower(backLeftPower);
+        backRightDrive.setPower(backRightPower);
     }
 
     /**
