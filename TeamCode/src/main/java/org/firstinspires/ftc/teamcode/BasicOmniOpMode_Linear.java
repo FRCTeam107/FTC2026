@@ -179,7 +179,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             backRightDrive.setPower(backRightPower);
 
             if (pickupbutton) {
-                pickupMotor.setPower(.25);
+                pickupMotor.setPower(1);
             } else {
                 pickupMotor.setPower(0);
             }
