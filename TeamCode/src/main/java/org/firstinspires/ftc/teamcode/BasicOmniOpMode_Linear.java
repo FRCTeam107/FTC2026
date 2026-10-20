@@ -34,6 +34,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -64,7 +66,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Omni Linear OpMode", group="Linear OpMode")
+@TeleOp(name="Matt Use This One", group="Linear OpMode")
 //Disabled
 public class BasicOmniOpMode_Linear extends LinearOpMode {
 
@@ -75,7 +77,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private DcMotor frontRightDrive = null;
     private DcMotor backRightDrive = null;
     private DcMotor pickupMotor = null;
-    private DcMotor shooterMotor = null;
+    private DcMotorEx shooterMotor = null;
     private CRServo indexServo1 = null;
     private CRServo indexServo2 = null;
     private CRServo indexServo3 = null;
@@ -89,7 +91,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         frontRightDrive = hardwareMap.get(DcMotor.class, "front_right_drive");
         backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
         pickupMotor = hardwareMap.get(DcMotor.class,"pickup_motor");
-        shooterMotor = hardwareMap.get(DcMotor.class,"shooter_motor");
+        shooterMotor = hardwareMap.get(DcMotorEx.class,"shooter_motor");
         indexServo1 = hardwareMap.get(CRServo.class,"index_servo_1");
         indexServo2 = hardwareMap.get(CRServo.class,"index_servo_2");
         indexServo3 = hardwareMap.get(CRServo.class,"index_servo_3");
@@ -108,8 +110,8 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        pickupMotor.setDirection(DcMotor.Direction.REVERSE);
-        shooterMotor.setDirection(DcMotor.Direction.FORWARD);
+        pickupMotor.setDirection(DcMotor.Direction.FORWARD);
+        shooterMotor.setDirection(DcMotorEx.Direction.FORWARD);
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
@@ -127,11 +129,12 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             double lateral = gamepad1.left_stick_x;
             double yaw = gamepad1.right_stick_x;
 
-            boolean pickupbutton = gamepad1.a;
-            boolean shootingbutton = gamepad1.b;
-            boolean indexServo1button = gamepad1.x;
-            boolean indexServo2button = gamepad1.x;
-            boolean indexServo3button = gamepad1.y;
+            boolean pickupbutton = gamepad2.left_trigger_pressed;
+            boolean shootingbutton = gamepad2.y;
+            boolean indexServo1button = gamepad2.left_trigger_pressed;
+            boolean indexServo2button = gamepad2.left_trigger_pressed;
+            boolean windmillButtonForward = gamepad2.dpad_up;
+            boolean windmillButtonBack = gamepad2.dpad_down;
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
             double frontLeftPower = axial + lateral + yaw;
@@ -181,13 +184,13 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
                 pickupMotor.setPower(0);
             }
             if (shootingbutton) {
-                shooterMotor.setPower(.50);
+                shooterMotor.setVelocity(3000);
             } else {
-                shooterMotor.setPower(0);
+                shooterMotor.setVelocity(0);
             }
             if (indexServo1button) {
 
-                indexServo2.setPower(-1);
+                indexServo2.setPower(1);
             } else{
                 indexServo2.setPower(0);
 
@@ -199,10 +202,12 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
                 indexServo1.setPower(0);
 
             }
-            if (indexServo3button) {
+            if (windmillButtonForward) {
                indexServo3.setPower(1);
             }else {
-               indexServo3.setPower(0);
+                if(windmillButtonBack)
+                    indexServo3.setPower(-1);
+                  //  indexServo3.setPower(0);
            }
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
