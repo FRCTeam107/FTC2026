@@ -110,7 +110,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        pickupMotor.setDirection(DcMotor.Direction.FORWARD);
+        pickupMotor.setDirection(DcMotor.Direction.REVERSE);
         shooterMotor.setDirection(DcMotorEx.Direction.FORWARD);
 
         // Wait for the game to start (driver presses START)
@@ -179,7 +179,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             backRightDrive.setPower(backRightPower);
 
             if (pickupbutton) {
-                pickupMotor.setPower(1);
+                pickupMotor.setPower(-1);
             } else {
                 pickupMotor.setPower(0);
             }
@@ -195,6 +195,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
                 indexServo2.setPower(0);
 
             }
+
             if (indexServo2button) {
                 indexServo1.setPower(-1);
 
@@ -204,12 +205,10 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             }
             if (windmillButtonForward) {
                indexServo3.setPower(1);
-            }else {
-                if(windmillButtonBack)
+            }else if (windmillButtonBack){
                     indexServo3.setPower(-1);
-                  //  indexServo3.setPower(0);
-           }
-            // Show the elapsed game time and wheel power.
+            }else {indexServo3.setPower(0);}
+                // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
