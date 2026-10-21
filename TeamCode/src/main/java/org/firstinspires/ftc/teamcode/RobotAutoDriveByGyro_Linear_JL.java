@@ -171,8 +171,8 @@ public class RobotAutoDriveByGyro_Linear_JL extends LinearOpMode {
          *
          * To Do:  EDIT these two lines to match YOUR mounting configuration.
          */
-        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-        RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
+        RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.UP;
         RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
 
         // Now initialize the IMU with this mounting orientation
@@ -209,9 +209,9 @@ public class RobotAutoDriveByGyro_Linear_JL extends LinearOpMode {
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
         driveStraight( DRIVE_SPEED, 20.0, 0.0);    // Drive Forward 20"
-        turnToHeading( TURN_SPEED, 45.0);               // Turn  CCW to 45 Degrees
-        holdHeading( TURN_SPEED, 45.0, 0.5);   // Hold 45 Deg heading for a 1/2 second
-        driveStraight( DRIVE_SPEED, -20.0, 45.0);  // Drive Backwards 20" at -45 degrees
+        turnToHeading( TURN_SPEED, -45.0);               // Turn  CCW to -45 Degrees
+        holdHeading( TURN_SPEED, -45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
+        driveStraight( DRIVE_SPEED, -20.0, -45.0);  // Drive Backwards 20" at -45 degrees
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
