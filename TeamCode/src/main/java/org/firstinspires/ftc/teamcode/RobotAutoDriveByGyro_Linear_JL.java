@@ -406,7 +406,7 @@ public class RobotAutoDriveByGyro_Linear_JL extends LinearOpMode {
 
         double axial = 0;
         double lateral = drive;
-        double yaw = -turn;
+        double yaw = turn;
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -459,6 +459,6 @@ public class RobotAutoDriveByGyro_Linear_JL extends LinearOpMode {
      */
     public double getHeading() {
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
-        return orientation.getRoll(AngleUnit.DEGREES); // NOTE: Edit to getYaw in simulator.
+        return -orientation.getYaw(AngleUnit.DEGREES); // NOTE: Edit to getYaw in simulator.
     }
 }
