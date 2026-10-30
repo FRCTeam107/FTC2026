@@ -78,9 +78,10 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private DcMotor backRightDrive = null;
     private DcMotor pickupMotor = null;
     private DcMotorEx shooterMotor = null;
+    private CRServo windmillServo  = null;
     private CRServo indexServo1 = null;
     private CRServo indexServo2 = null;
-    private CRServo indexServo3 = null;
+
     @Override
     public void runOpMode() {
 
@@ -92,9 +93,9 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
         pickupMotor = hardwareMap.get(DcMotor.class,"pickup_motor");
         shooterMotor = hardwareMap.get(DcMotorEx.class,"shooter_motor");
+        windmillServo = hardwareMap.get(CRServo.class,"windmill_servo");
         indexServo1 = hardwareMap.get(CRServo.class,"index_servo_1");
         indexServo2 = hardwareMap.get(CRServo.class,"index_servo_2");
-        indexServo3 = hardwareMap.get(CRServo.class,"index_servo_3");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -204,10 +205,10 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
 
             }
             if (windmillButtonForward) {
-               indexServo3.setPower(1);
+               windmillServo.setPower(1);
             }else if (windmillButtonBack){
-                    indexServo3.setPower(-1);
-            }else {indexServo3.setPower(0);}
+                windmillServo.setPower(-1);
+            }else {windmillServo.setPower(0);}
                 // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
