@@ -81,9 +81,9 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private DcMotor backRightDrive = null;
     private DcMotor pickupMotor = null;
     private DcMotorEx shooterMotor = null;
+    private CRServo windmillServo  = null;
     private CRServo indexServo1 = null;
     private CRServo indexServo2 = null;
-    private CRServo windmill_servo = null;
     // This declares the IMU needed to get the current direction the robot is facing
     IMU imu;
     @Override
@@ -97,9 +97,9 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
         pickupMotor = hardwareMap.get(DcMotor.class,"pickup_motor");
         shooterMotor = hardwareMap.get(DcMotorEx.class,"shooter_motor");
+        windmillServo = hardwareMap.get(CRServo.class,"windmill_servo");
         indexServo1 = hardwareMap.get(CRServo.class,"index_servo_1");
         indexServo2 = hardwareMap.get(CRServo.class,"index_servo_2");
-        windmill_servo = hardwareMap.get(CRServo.class,"windmill_servo");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -200,14 +200,11 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
                 indexServo1.setPower(0);
 
             }
-            if (shooterMotor.getVelocity() >= targetvelocity);
-
-
             if (windmillButtonForward && shooterMotor.getVelocity() >= targetvelocity) {
-                windmill_servo.setPower(1);
+                windmillServo.setPower(1);
             }else if (windmillButtonBack){
-                windmill_servo.setPower(-1);
-            }else {windmill_servo.setPower(0);}
+                windmillServo.setPower(-1);
+            }else {windmillServo.setPower(0);}
                 // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
 //            telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
