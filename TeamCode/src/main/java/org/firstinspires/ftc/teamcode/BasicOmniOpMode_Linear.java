@@ -29,13 +29,17 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 /*
  * This file contains an example of a Linear "OpMode".
@@ -55,7 +59,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *
  * 1) Axial:    Driving forward and backward               Left-joystick Forward/Backward
  * 2) Lateral:  Strafing right and left                     Left-joystick Right and Left
- * 3) Yaw:      Rotating Clockwise and counter clockwise    Right-joystick Right and Left
+ * 3) Yaw:      Rotating Clockwise and counterclockwise    Right-joystick Right and Left
  *
  * This code is written assuming that the right-side motors need to be reversed for the robot to drive forward.
  * When you first test your robot, if it moves backward when you push the left stick forward, then you must flip
@@ -114,6 +118,17 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         pickupMotor.setDirection(DcMotor.Direction.REVERSE);
         shooterMotor.setDirection(DcMotorEx.Direction.FORWARD);
 
+        imu = hardwareMap.get(IMU.class, "imu");
+        // This needs to be changed to match the orientation on your robot
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection =
+                RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
+        RevHubOrientationOnRobot.UsbFacingDirection usbDirection =
+                RevHubOrientationOnRobot.UsbFacingDirection.UP;
+
+        RevHubOrientationOnRobot orientationOnRobot = new
+                RevHubOrientationOnRobot(logoDirection, usbDirection);
+        imu.initialize(new IMU.Parameters(orientationOnRobot));
+
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -126,9 +141,9 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             double max;
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-            double axial = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-            double lateral = gamepad1.left_stick_x;
-            double yaw = gamepad1.right_stick_x;
+//            double axial = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+//            double lateral = gamepad1.left_stick_x;
+//            double yaw = gamepad1.right_stick_x;
 
             boolean pickupbutton = gamepad2.left_trigger_pressed;
             boolean shootingbutton = gamepad2.y;
@@ -137,47 +152,28 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             boolean windmillButtonForward = gamepad2.dpad_up;
             boolean windmillButtonBack = gamepad2.dpad_down;
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
-            // Set up a variable for each drive wheel to save the power level for telemetry.
-            double frontLeftPower = axial + lateral + yaw;
-            double frontRightPower = axial - lateral - yaw;
-            double backLeftPower = axial - lateral + yaw;
-            double backRightPower = axial + lateral - yaw;
+            // Set up a variable for each drive wheel to save the power lev el for telemetry.
 
+            double targetvelocity = 1250;
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
-            max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
-            max = Math.max(max, Math.abs(backLeftPower));
-            max = Math.max(max, Math.abs(backRightPower));
+//            max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
+//            max = Math.max(max, Math.abs(backLeftPower));
+//            max = Math.max(max, Math.abs(backRightPower));
+//
+//            if (max > 1.0) {
+//                frontLeftPower /= max;
+//                frontRightPower /= max;
+//                backLeftPower /= max;
+//                backRightPower /= max;
+//            }
 
-            if (max > 1.0) {
-                frontLeftPower /= max;
-                frontRightPower /= max;
-                backLeftPower /= max;
-                backRightPower /= max;
+            if (gamepad1.left_bumper) {
+                drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+            } else {
+                driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
             }
 
-            // This is test code:
-            //
-            // Uncomment the following code to test your motor directions.
-            // Each button should make the corresponding motor run FORWARD.
-            //   1) First get all the motors to take to correct positions on the robot
-            //      by adjusting your Robot Configuration if necessary.
-            //   2) Then make sure they run in the correct direction by modifying the
-            //      the setDirection() calls above.
-            // Once the correct motors move in the correct direction re-comment this code.
-
-            /*
-            frontLeftPower  = gamepad1.x ? 1.0 : 0.0;  // X gamepad
-            backLeftPower   = gamepad1.a ? 1.0 : 0.0;  // A gamepad
-            frontRightPower = gamepad1.y ? 1.0 : 0.0;  // Y gamepad
-            backRightPower  = gamepad1.b ? 1.0 : 0.0;  // B gamepad
-            */
-
-            // Send calculated power to wheels
-            frontLeftDrive.setPower(frontLeftPower);
-            frontRightDrive.setPower(frontRightPower);
-            backLeftDrive.setPower(backLeftPower);
-            backRightDrive.setPower(backRightPower);
 
             if (pickupbutton) {
                 pickupMotor.setPower(-1);
@@ -185,7 +181,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
                 pickupMotor.setPower(0);
             }
             if (shootingbutton) {
-                shooterMotor.setVelocity(3000);
+                shooterMotor.setVelocity(targetvelocity);
             } else {
                 shooterMotor.setVelocity(0);
             }
@@ -197,22 +193,83 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
 
             }
 
-            if (indexServo2button) {
+            if (indexServo1button) {
                 indexServo1.setPower(-1);
 
             } else{
                 indexServo1.setPower(0);
 
             }
-            if (windmillButtonForward) {
-               indexServo3.setPower(1);
+            if (shooterMotor.getVelocity() >= targetvelocity);
+
+
+            if (windmillButtonForward && shooterMotor.getVelocity() >= targetvelocity) {
+                windmill_servo.setPower(1);
             }else if (windmillButtonBack){
-                    indexServo3.setPower(-1);
-            }else {indexServo3.setPower(0);}
+                windmill_servo.setPower(-1);
+            }else {windmill_servo.setPower(0);}
                 // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
-            telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
+//            telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
+//            telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
             telemetry.update();
         }
-    }}
+
+
+
+    }
+    private void driveFieldRelative(double forward, double right, double rotate) {
+        // Send calculated power to wheels
+        double theta = Math.atan2(forward, right);
+        double r = Math.hypot(right, forward);
+
+        // Second, rotate angle by the angle the robot is pointing
+        theta = AngleUnit.normalizeRadians(theta -
+                imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
+
+        // Third, convert back to cartesian
+        double newForward = r * Math.sin(theta);
+        double newRight = r * Math.cos(theta);
+
+        // Finally, call the drive method with robot relative forward and right amounts
+        drive(newForward, newRight, rotate);
+    }
+
+    // Thanks to FTC16072 for sharing this code!!
+    public void drive(double forward, double right, double rotate) {
+        // This calculates the power needed for each wheel based on the amount of forward,
+        // strafe right, and rotate
+        double frontLeftPower = forward + right + rotate;
+        double frontRightPower = forward - right - rotate;
+        double backLeftPower = forward - right + rotate;
+        double backRightPower = forward + right - rotate;
+
+        //    double frontLeftPower = axial + lateral + yaw;
+//            double frontRightPower = axial - lateral - yaw;
+//            double backLeftPower = axial - lateral + yaw;
+//            double backRightPower = axial + lateral - yaw;
+
+        double max = 1.0;
+        double maxSpeed = 1.0;  // make this slower for outreaches
+
+        // This is needed to make sure we don't pass > 1.0 to any wheel
+        // It allows us to keep all of the motors in proportion to what they should
+        // be and not get clipped
+
+        // This ensures that the robot maintains the desired motion.
+            max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
+            max = Math.max(max, Math.abs(backLeftPower));
+            max = Math.max(max, Math.abs(backRightPower));
+
+            if (max > 1.0) {
+                frontLeftPower /= max;
+                frontRightPower /= max;
+                backLeftPower /= max;
+                backRightPower /= max;
+            }
+
+        frontLeftDrive.setPower(frontLeftPower);
+        frontRightDrive.setPower(frontRightPower);
+        backLeftDrive.setPower(backLeftPower);
+        backRightDrive.setPower(backRightPower);
+}}
