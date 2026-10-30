@@ -79,7 +79,9 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private DcMotorEx shooterMotor = null;
     private CRServo indexServo1 = null;
     private CRServo indexServo2 = null;
-    private CRServo indexServo3 = null;
+    private CRServo windmill_servo = null;
+    // This declares the IMU needed to get the current direction the robot is facing
+    IMU imu;
     @Override
     public void runOpMode() {
 
@@ -93,7 +95,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         shooterMotor = hardwareMap.get(DcMotorEx.class,"shooter_motor");
         indexServo1 = hardwareMap.get(CRServo.class,"index_servo_1");
         indexServo2 = hardwareMap.get(CRServo.class,"index_servo_2");
-        indexServo3 = hardwareMap.get(CRServo.class,"index_servo_3");
+        windmill_servo = hardwareMap.get(CRServo.class,"windmill_servo");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
