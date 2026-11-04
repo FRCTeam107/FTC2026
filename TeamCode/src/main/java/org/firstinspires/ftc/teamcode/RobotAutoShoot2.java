@@ -89,9 +89,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  *  Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="shooting code (aim at the goal)/Elliott ", group="Robot")
+@Autonomous(name="shooting code (aim at the goal)/Elliott #2 ", group="Robot")
 // @Disabled
-public class RobotAutoShootThree extends LinearOpMode {
+public class RobotAutoShoot2 extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor frontLeftDrive = null;
@@ -174,8 +174,8 @@ public class RobotAutoShootThree extends LinearOpMode {
          *
          * To Do:  EDIT these two lines to match YOUR mounting configuration.
          */
-        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-        RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
+        RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.UP;
         RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
 
         // Now initialize the IMU with this mounting orientation
@@ -263,10 +263,10 @@ public class RobotAutoShootThree extends LinearOpMode {
         windmillServo.setPower(0);
         sleep(5000);
 
-        //turnToHeading(1,150);//-135
-        //driveStraight(1,27,150);//-135
-        //holdHeading(0,150 ,3);
-        //driveStraight(0,0,0);
+        turnToHeading(1,-140);//-135
+        driveStraight(1,70,-140);//-135
+        holdHeading(0,-140 ,5);
+        driveStraight(0,0,0);
 
 
         frontLeftDrive.setPower(0);
@@ -472,7 +472,7 @@ public class RobotAutoShootThree extends LinearOpMode {
 
         double axial = 0;
         double lateral = drive;
-        double yaw = -turn;
+        double yaw = turn;
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -526,6 +526,6 @@ public class RobotAutoShootThree extends LinearOpMode {
      */
     public double getHeading() {
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
-        return orientation.getRoll(AngleUnit.DEGREES); // NOTE: Edit to getYaw in simulator.
+        return -orientation.getYaw(AngleUnit.DEGREES); // NOTE: Edit to getYaw in simulator.
     }
 }
