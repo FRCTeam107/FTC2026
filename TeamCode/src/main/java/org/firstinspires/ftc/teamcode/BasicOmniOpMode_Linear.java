@@ -79,6 +79,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private CRServo indexServo1 = null;
     private CRServo indexServo2 = null;
     private CRServo windmillServo = null;
+    private int targetVelcity = 1250;
     @Override
     public void runOpMode() {
 
@@ -182,7 +183,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
                 pickupMotor.setPower(0);
             }
             if (shootingbutton) {
-                shooterMotor.setVelocity(3000);
+                shooterMotor.setVelocity(targetVelcity);
             } else {
                 shooterMotor.setVelocity(0);
             }
