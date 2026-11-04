@@ -116,7 +116,7 @@ public class RobotAutoShootThree extends LinearOpMode {
     private double frontRightPower = 0;
     private int leftTarget = 0;
     private int rightTarget = 0;
-    private int targetVelocity = 1250;
+    private int targetVelocity = 1300;
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -218,7 +218,6 @@ public class RobotAutoShootThree extends LinearOpMode {
             telemetry.addData("shooter Velocity", shooterMotor.getVelocity());
             telemetry.update();
         }
-        sleep(1000);
         windmillServo.setPower(1);
         sleep(250);// feed duration
         windmillServo.setPower(0);
@@ -227,10 +226,10 @@ public class RobotAutoShootThree extends LinearOpMode {
         shooterMotor.setVelocity(targetVelocity);
         while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
             telemetry.addData("shooter Velocity", shooterMotor.getVelocity());
-        telemetry.update();
-    }
-    windmillServo.setPower(1);
-    sleep(250);//feed duration
+            telemetry.update();
+         }
+        windmillServo.setPower(1);
+        sleep(250);//feed duration
         windmillServo.setPower(0);
         sleep(1000);
         //shoot3
@@ -246,6 +245,16 @@ public class RobotAutoShootThree extends LinearOpMode {
         //shoot 4
         shooterMotor.setVelocity(targetVelocity);
         while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
+            telemetry.addData("shooter Velocity", shooterMotor.getVelocity());
+            telemetry.update();
+        }
+        windmillServo.setPower(1);
+        sleep(250);//feed duration
+        windmillServo.setPower(0);
+        sleep(1000);
+        //shoot 5
+        shooterMotor.setVelocity(targetVelocity);
+        while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
             telemetry.addData("shooter velocity ", shooterMotor.getVelocity());
             telemetry.update();
         }
@@ -253,9 +262,10 @@ public class RobotAutoShootThree extends LinearOpMode {
         sleep(250);// feed duration
         windmillServo.setPower(0);
         sleep(5000);
-        turnToHeading(1,150);//-135
-        driveStraight(1,27,150);//-135
-        holdHeading(0,150 ,15);
+
+        //turnToHeading(1,150);//-135
+        //driveStraight(1,27,150);//-135
+        //holdHeading(0,150 ,3);
         //driveStraight(0,0,0);
 
 
