@@ -148,9 +148,10 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             boolean pickupbutton = gamepad2.left_trigger_pressed;
             boolean shootingbutton = gamepad2.y;
             boolean indexServo1button = gamepad2.left_trigger_pressed;
-            boolean indexServo2button = gamepad2.left_trigger_pressed;
             boolean windmillButtonForward = gamepad2.dpad_up;
             boolean windmillButtonBack = gamepad2.dpad_down;
+            boolean drive_type = gamepad1.left_bumper;
+            boolean last_leftbumper = false;
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power lev el for telemetry.
 
@@ -167,8 +168,16 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
 //                backLeftPower /= max;
 //                backRightPower /= max;
 //            }
+            while (opModeIsActive()) {
+                boolean buttonPressed = gamepad1.left_bumper;
+                if (buttonPressed && !last_leftbumper) {
+                    drive_type = !drive_type;
+                }
 
-            if (gamepad1.left_bumper) {
+
+
+            }
+            if (drive_type) {
                 drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
             } else {
                 driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
@@ -192,18 +201,13 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             if (indexServo1button) {
 
                 indexServo2.setPower(1);
+                indexServo1.setPower(-1);
             } else{
                 indexServo2.setPower(0);
-
-            }
-
-            if (indexServo1button) {
-                indexServo1.setPower(-1);
-
-            } else{
                 indexServo1.setPower(0);
-
             }
+
+
             if (windmillButtonForward && shooterMotor.getVelocity() >= targetvelocity) {
                 windmillServo.setPower(1);
             }else if (windmillButtonBack){
@@ -274,3 +278,4 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         backLeftDrive.setPower(backLeftPower);
         backRightDrive.setPower(backRightPower);
 }}
+
