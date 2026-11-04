@@ -29,13 +29,11 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -80,7 +78,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private DcMotorEx shooterMotor = null;
     private CRServo indexServo1 = null;
     private CRServo indexServo2 = null;
-    private CRServo indexServo3 = null;
+    private CRServo windmillServo = null;
     @Override
     public void runOpMode() {
 
@@ -94,7 +92,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         shooterMotor = hardwareMap.get(DcMotorEx.class,"shooter_motor");
         indexServo1 = hardwareMap.get(CRServo.class,"index_servo_1");
         indexServo2 = hardwareMap.get(CRServo.class,"index_servo_2");
-        indexServo3 = hardwareMap.get(CRServo.class,"index_servo_3");
+        windmillServo = hardwareMap.get(CRServo.class,"windmill_servo");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -204,10 +202,11 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
 
             }
             if (windmillButtonForward) {
-               indexServo3.setPower(1);
+               windmillServo.setPower(1);
             }else if (windmillButtonBack){
-                    indexServo3.setPower(-1);
-            }else {indexServo3.setPower(0);}
+                    windmillServo.setPower(-1);
+            }else {
+                windmillServo.setPower(0);}
                 // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
