@@ -121,7 +121,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         imu = hardwareMap.get(IMU.class, "imu");
         // This needs to be changed to match the orientation on your robot
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection =
-                RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
+                RevHubOrientationOnRobot.LogoFacingDirection.LEFT ;
         RevHubOrientationOnRobot.UsbFacingDirection usbDirection =
                 RevHubOrientationOnRobot.UsbFacingDirection.UP;
 
@@ -172,6 +172,10 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
                 drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
             } else {
                 driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+            }
+
+            if (gamepad1.a) {
+                imu.resetYaw();
             }
 
 
