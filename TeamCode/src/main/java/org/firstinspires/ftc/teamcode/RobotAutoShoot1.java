@@ -89,7 +89,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  *  Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="shooting code (aim at the goal)/Elliott #1 ", group="Robot")
+@Autonomous(name="AutoshootThenDrive", group="Robot")
 // @Disabled
 public class RobotAutoShoot1 extends LinearOpMode {
 

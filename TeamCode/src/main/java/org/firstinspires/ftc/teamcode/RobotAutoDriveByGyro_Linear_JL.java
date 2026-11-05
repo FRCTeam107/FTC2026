@@ -88,7 +88,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  *  Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 //2 yello and 4 big for tip
-@Autonomous(name="TEAM R.O.B.O.T.I.C.S. Secret WEAPON", group="Robot")
+@Autonomous(name="DrivingAuton", group="Robot")
 // @Disabled
 public class RobotAutoDriveByGyro_Linear_JL extends LinearOpMode {
 
@@ -101,7 +101,7 @@ public class RobotAutoDriveByGyro_Linear_JL extends LinearOpMode {
     private DcMotor shooterMotor = null;
     private CRServo indexServo1 = null;
     private CRServo indexServo2 = null;
-    private CRServo windmill_servo = null;
+    private CRServo windmillServo = null;
     private IMU             imu         = null;      // Control/Expansion Hub IMU
 
     private double          headingError  = 0;
@@ -155,7 +155,7 @@ public class RobotAutoDriveByGyro_Linear_JL extends LinearOpMode {
         shooterMotor = hardwareMap.get(DcMotor.class,"shooter_motor");
         indexServo1 = hardwareMap.get(CRServo.class,"index_servo_1");
         indexServo2 = hardwareMap.get(CRServo.class,"index_servo_2");
-        windmill_servo = hardwareMap.get(CRServo.class,"windmill_servo");
+        windmillServo = hardwareMap.get(CRServo.class,"windmill_servo");
 
         // To drive forwar d, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
