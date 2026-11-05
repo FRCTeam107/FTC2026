@@ -86,6 +86,8 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private CRServo indexServo2 = null;
     // This declares the IMU needed to get the current direction the robot is facing
     IMU imu;
+    private int targetVelcity = 1750;
+
     @Override
     public void runOpMode() {
 
