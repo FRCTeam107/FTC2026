@@ -86,7 +86,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private CRServo indexServo2 = null;
     // This declares the IMU needed to get the current direction the robot is facing
     IMU imu;
-    private int targetVelcity = 1750;
+    private int targetVelcity = 1800;
 
     @Override
     public void runOpMode() {
@@ -153,11 +153,12 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             boolean windmillButtonForward = gamepad2.dpad_up;
             boolean windmillButtonBack = gamepad2.dpad_down;
             boolean drive_type = gamepad1.left_bumper;
+            boolean reverse_pickup = gamepad1.right_bumper;
             boolean last_leftbumper = false;
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power lev el for telemetry.
 
-            double targetvelocity = 1250;
+            double targetvelocity = 1225;
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
 //            max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
@@ -170,20 +171,21 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
 //                backLeftPower /= max;
 //                backRightPower /= max;
 //            }
-            while (opModeIsActive()) {
-                boolean buttonPressed = gamepad1.left_bumper;
-                if (buttonPressed && !last_leftbumper) {
-                    drive_type = !drive_type;
-                }
+//            while (opModeIsActive()) {
+//                boolean buttonPressed = gamepad1.left_bumper;
+//               if (buttonPressed && !last_leftbumper) {
+//                    drive_type = !drive_type;
+//                }
 
 
 
-            }
-            if (drive_type) {
-                drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-            } else {
+
+//            if (drive_type) {
+//            if(gamepad1.left_bumper){
+//                drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+//            } else {
                 driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-            }
+//            }
 
             if (gamepad1.a) {
                 imu.resetYaw();
@@ -192,9 +194,16 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
 
             if (pickupbutton) {
                 pickupMotor.setPower(-1);
-            } else {
+            }
+            else{
                 pickupMotor.setPower(0);
             }
+            if(reverse_pickup) {
+                pickupMotor.setPower(1);
+            }else{
+                pickupMotor.setPower(0);
+            }
+
             if (shootingbutton) {
                 shooterMotor.setVelocity(targetvelocity);
             } else {
@@ -209,8 +218,8 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
                 indexServo1.setPower(0);
             }
 
-
             if (windmillButtonForward && shooterMotor.getVelocity() >= targetvelocity) {
+//            if (windmillButtonForward) {
                 windmillServo.setPower(1);
             }else if (windmillButtonBack){
                 windmillServo.setPower(-1);
@@ -221,6 +230,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
 //            telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
             telemetry.update();
         }
+
 
 
 

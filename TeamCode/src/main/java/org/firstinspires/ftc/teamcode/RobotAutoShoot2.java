@@ -116,7 +116,7 @@ public class RobotAutoShoot2 extends LinearOpMode {
     private double frontRightPower = 0;
     private int leftTarget = 0;
     private int rightTarget = 0;
-    private int targetVelocity = 1300;
+    private int targetVelocity = 1275;
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -263,10 +263,11 @@ public class RobotAutoShoot2 extends LinearOpMode {
         windmillServo.setPower(0);
         sleep(5000);
 
-        turnToHeading(1,-140);//-135
-        driveStraight(1,70,-140);//-135
-        holdHeading(0,-140 ,5);
-        driveStraight(0,0,0);
+        turnToHeading(0,0);//-135
+        driveStraight(1,-22,0);//-135
+        turnToHeading(1,-90);//-135
+        holdHeading(0,-90 ,1);
+        driveStraight(1,45,90);
 
 
         frontLeftDrive.setPower(0);
@@ -529,3 +530,4 @@ public class RobotAutoShoot2 extends LinearOpMode {
         return -orientation.getYaw(AngleUnit.DEGREES); // NOTE: Edit to getYaw in simulator.
     }
 }
+
