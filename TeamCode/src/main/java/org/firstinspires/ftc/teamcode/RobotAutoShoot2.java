@@ -89,7 +89,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  *  Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Delay Autoshoot then drive", group="Robot")
+@Autonomous(name="Autoshoot then drive left", group="Robot")
 // @Disabled
 public class RobotAutoShoot2 extends LinearOpMode {
 
@@ -116,7 +116,7 @@ public class RobotAutoShoot2 extends LinearOpMode {
     private double frontRightPower = 0;
     private int leftTarget = 0;
     private int rightTarget = 0;
-    private int targetVelocity = 1300;
+    private int targetVelocity = 1325;
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -221,7 +221,7 @@ public class RobotAutoShoot2 extends LinearOpMode {
         windmillServo.setPower(1);
         sleep(250);// feed duration
         windmillServo.setPower(0);
-        sleep(1000);
+        sleep(2000);
         //shoot2
         shooterMotor.setVelocity(targetVelocity);
         while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
@@ -231,7 +231,7 @@ public class RobotAutoShoot2 extends LinearOpMode {
         windmillServo.setPower(1);
         sleep(250);//feed duration
         windmillServo.setPower(0);
-        sleep(1000);
+        sleep(2000);
         //shoot3
         shooterMotor.setVelocity(targetVelocity);
         while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
@@ -241,7 +241,7 @@ public class RobotAutoShoot2 extends LinearOpMode {
         windmillServo.setPower(1);
         sleep(250);// feed duration
         windmillServo.setPower(0);
-        sleep(1000);
+        sleep(2000);
         //shoot 4
         shooterMotor.setVelocity(targetVelocity);
         while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
@@ -251,7 +251,7 @@ public class RobotAutoShoot2 extends LinearOpMode {
         windmillServo.setPower(1);
         sleep(250);//feed duration
         windmillServo.setPower(0);
-        sleep(1000);
+        sleep(2000);
         //shoot 5
         shooterMotor.setVelocity(targetVelocity);
         while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
@@ -261,11 +261,11 @@ public class RobotAutoShoot2 extends LinearOpMode {
         windmillServo.setPower(1);
         sleep(250);// feed duration
         windmillServo.setPower(0);
-        sleep(5000);
+        sleep(3000);
 
-        turnToHeading(1,-140);//-135
-        driveStraight(1,70,-140);//-135
-        holdHeading(0,-140 ,5);
+        turnToHeading(1,-120);//-135
+        driveStraight(1,52,-120);//-135
+        holdHeading(0,-120 ,5);
         driveStraight(0,0,0);
 
 
