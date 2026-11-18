@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -89,8 +90,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  *  Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Delay Autoshoot Then Drive right", group="Robot")
-// @Disabled
+@Autonomous(name="", group="Robot")
+@Disabled
 public class DelayAutoShoot1 extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -211,7 +212,7 @@ public class DelayAutoShoot1 extends LinearOpMode {
         //          holdHeading() is used after turns to let the heading stabilize
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
-        sleep(15000);
+        sleep(10000);
         //shoot 1
         shooterMotor.setVelocity(targetVelocity);
         while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity) {

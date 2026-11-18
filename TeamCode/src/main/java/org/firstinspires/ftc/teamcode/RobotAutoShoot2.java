@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -89,8 +90,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  *  Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Autoshoot then drive left", group="Robot")
-// @Disabled
+@Autonomous(name="Autoshoot then drive right", group="Robot")
+@Disabled
 public class RobotAutoShoot2 extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -263,9 +264,9 @@ public class RobotAutoShoot2 extends LinearOpMode {
         windmillServo.setPower(0);
         sleep(3000);
 
-        turnToHeading(1,-120);//-135
-        driveStraight(1,52,-120);//-135
-        holdHeading(0,-120 ,5);
+        turnToHeading(1,-110);//-135
+        driveStraight(1,52,-110);//-135
+        holdHeading(0,-110 ,5);
         driveStraight(0,0,0);
 
 

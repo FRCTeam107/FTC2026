@@ -150,11 +150,11 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             boolean pickupbutton = gamepad2.left_trigger_pressed;
             boolean shootingbutton = gamepad2.y;
             boolean indexServo1button = gamepad2.left_trigger_pressed;
-            boolean indexServo2button = gamepad2.left_trigger_pressed;
+            //boolean indexServo2button = gamepad2.left_trigger_pressed;
             boolean windmillButtonForward = gamepad2.dpad_up;
             boolean windmillButtonBack = gamepad2.dpad_down;
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
-            // Set up a variable for each drive wheel to save the power lev el for telemetry.
+            // Set up a variable for each drive wheel to save the power level for telemetry.
 
 
             // Normalize the values so no wheel power exceeds 100%

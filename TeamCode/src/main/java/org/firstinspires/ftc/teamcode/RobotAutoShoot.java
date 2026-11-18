@@ -89,9 +89,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  *  Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Autoshoot Then Drive right", group="Robot")
+@Autonomous(name="Autoshoot", group="Robot")
 // @Disabled
-public class RobotAutoShoot1 extends LinearOpMode {
+public class RobotAutoShoot extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor frontLeftDrive = null;
@@ -116,7 +116,7 @@ public class RobotAutoShoot1 extends LinearOpMode {
     private double frontRightPower = 0;
     private int leftTarget = 0;
     private int rightTarget = 0;
-    private int targetVelocity = 1450;
+    private int targetVelocity = 1300;
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -219,19 +219,19 @@ public class RobotAutoShoot1 extends LinearOpMode {
             telemetry.update();
         }
         windmillServo.setPower(1);
-        sleep(250);// feed duration
+        sleep(125);// feed duration
         windmillServo.setPower(0);
-        sleep(2000);
+        sleep(1000);
         //shoot2
         shooterMotor.setVelocity(targetVelocity);
         while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
             telemetry.addData("shooter Velocity", shooterMotor.getVelocity());
             telemetry.update();
-         }
+        }
         windmillServo.setPower(1);
-        sleep(250);//feed duration
+        sleep(125);//feed duration
         windmillServo.setPower(0);
-        sleep(2000);
+        sleep(1000);
         //shoot3
         shooterMotor.setVelocity(targetVelocity);
         while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
@@ -239,9 +239,9 @@ public class RobotAutoShoot1 extends LinearOpMode {
             telemetry.update();
         }
         windmillServo.setPower(1);
-        sleep(250);// feed duration
+        sleep(125);// feed duration
         windmillServo.setPower(0);
-        sleep(2000);
+        sleep(1000);
         //shoot 4
         shooterMotor.setVelocity(targetVelocity);
         while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
@@ -249,25 +249,59 @@ public class RobotAutoShoot1 extends LinearOpMode {
             telemetry.update();
         }
         windmillServo.setPower(1);
-        sleep(250);//feed duration
+        sleep(125);//feed duration
         windmillServo.setPower(0);
-        sleep(2000);
+        sleep(1000);
+
         //shoot 5
+        shooterMotor.setVelocity(targetVelocity);
+        while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
+            telemetry.addData("shooter Velocity", shooterMotor.getVelocity());
+            telemetry.update();
+        }
+        windmillServo.setPower(1);
+        sleep(125);//feed duration
+        windmillServo.setPower(0);
+        sleep(1000);
+
+        //shoot 6
+        shooterMotor.setVelocity(targetVelocity);
+        while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
+            telemetry.addData("shooter Velocity", shooterMotor.getVelocity());
+            telemetry.update();
+        }
+        windmillServo.setPower(1);
+        sleep(125);//feed duration
+        windmillServo.setPower(0);
+        sleep(1000);
+
+        //shoot 7
         shooterMotor.setVelocity(targetVelocity);
         while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
             telemetry.addData("shooter velocity ", shooterMotor.getVelocity());
             telemetry.update();
         }
         windmillServo.setPower(1);
-        sleep(250);// feed duration
+        sleep(125);// feed duration
         windmillServo.setPower(0);
-        sleep(3000);
+        sleep(2000);
+        //shoot 8
+        shooterMotor.setVelocity(targetVelocity);
+        while (opModeIsActive() && shooterMotor.getVelocity() < targetVelocity){
+            telemetry.addData("shooter velocity ", shooterMotor.getVelocity());
+            telemetry.update();
+        }
+        windmillServo.setPower(1);
+        sleep(125);// feed duration
+        windmillServo.setPower(0);
+        sleep(2000);
 
         turnToHeading(1,100);
         driveStraight(1,30,100);
         holdHeading(0,100 ,2);
         turnToHeading(1,170);
-        driveStraight(1,85,170);
+        driveStraight(1,70
+                ,170);
         holdHeading(0,170 ,4);
         driveStraight(0,0,0);
 
