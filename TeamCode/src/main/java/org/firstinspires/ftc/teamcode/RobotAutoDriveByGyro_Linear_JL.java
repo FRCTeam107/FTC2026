@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -89,7 +90,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  */
 //2 yello and 4 big for tip
 @Autonomous(name="DrivingAuton", group="Robot")
-// @Disabled
+@Disabled
 public class RobotAutoDriveByGyro_Linear_JL extends LinearOpMode {
 
     /* Declare OpMode members. */

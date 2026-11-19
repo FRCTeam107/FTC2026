@@ -86,7 +86,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private CRServo indexServo2 = null;
     // This declares the IMU needed to get the current direction the robot is facing
     IMU imu;
-    private int targetVelcity = 1750;
+    private int targetVelcity = 1300;
 
     @Override
     public void runOpMode() {
@@ -150,13 +150,13 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             boolean pickupbutton = gamepad2.left_trigger_pressed;
             boolean shootingbutton = gamepad2.y;
             boolean indexServo1button = gamepad2.left_trigger_pressed;
-            boolean indexServo2button = gamepad2.left_trigger_pressed;
+            //boolean indexServo2button = gamepad2.left_trigger_pressed;
             boolean windmillButtonForward = gamepad2.dpad_up;
             boolean windmillButtonBack = gamepad2.dpad_down;
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
-            // Set up a variable for each drive wheel to save the power lev el for telemetry.
+            // Set up a variable for each drive wheel to save the power level for telemetry.
 
-            double targetvelocity = 1250;
+
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
 //            max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
@@ -170,10 +170,14 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
 //                backRightPower /= max;
 //            }
 
-            if (gamepad1.left_bumper) {
-                drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-            } else {
+//            if (gamepad1.left_bumper) {
+//                drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+//            } else {
                 driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+//            }
+
+            if(gamepad1.a){
+                imu.resetYaw();
             }
 
 
@@ -183,7 +187,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
                 pickupMotor.setPower(0);
             }
             if (shootingbutton) {
-                shooterMotor.setVelocity(targetvelocity);
+                shooterMotor.setVelocity(targetVelcity);
             } else {
                 shooterMotor.setVelocity(0);
             }
@@ -202,13 +206,13 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
                 indexServo1.setPower(0);
 
             }
-            if (windmillButtonForward && shooterMotor.getVelocity() >= targetvelocity) {
+            if (windmillButtonForward && shooterMotor.getVelocity() >= targetVelcity) {
                 windmillServo.setPower(1);
             }else if (windmillButtonBack){
                 windmillServo.setPower(-1);
             }else {windmillServo.setPower(0);}
                 // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
+//            telemetry.addData("Status", "Run Time: " + runtime.toString());
 //            telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
 //            telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
             telemetry.update();
@@ -218,19 +222,25 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
 
     }
     private void driveFieldRelative(double forward, double right, double rotate) {
+
+        telemetry.addData("Input: forward, right, rotate", "%4.2f, %4.2f, %4.2f", forward,right,rotate);
+//        telemetry.update();
         // Send calculated power to wheels
         double theta = Math.atan2(forward, right);
         double r = Math.hypot(right, forward);
 
+        telemetry.addData("Post Theta", "%4.2f", theta);
         // Second, rotate angle by the angle the robot is pointing
         theta = AngleUnit.normalizeRadians(theta -
                 imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
-
+        telemetry.addData("Post Theta", "%4.2f", theta);
         // Third, convert back to cartesian
         double newForward = r * Math.sin(theta);
         double newRight = r * Math.cos(theta);
 
         // Finally, call the drive method with robot relative forward and right amounts
+        telemetry.addData("Output: forward, right, rotate", "%4.2f, %4.2f, %4.2f", newForward,newRight,rotate);
+        telemetry.update();
         drive(newForward, newRight, rotate);
     }
 
